@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model GeneratedApp {
@@ -26,22 +27,19 @@ model Chat {
   title             String
   llamaCoderVersion String    @default("v2")
   shadcn            Boolean
-  messages          Message[]
   createdAt         DateTime  @default(now())
-
-  @@index([createdAt])
+  messages          Message[]
 }
 
 model Message {
   id        String   @id @default(nanoid(16))
   role      String
   content   String
-  files     Json?
   chatId    String
-  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
   position  Int
   createdAt DateTime @default(now())
+  files     Json?
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@index([chatId])
-  @@index([chatId, createdAt])
 }

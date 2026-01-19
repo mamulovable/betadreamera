@@ -63,9 +63,37 @@ export async function POST(req: Request) {
     messages = [messages[0], messages[1], messages[2], ...messages.slice(-7)];
   }
 
-  let options: ConstructorParameters<typeof Together>[0] = {};
+  if (model.startsWith("gemini")) {
+    const res = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GOOGLE_GENERATIVE_AI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: messages.map((m) => ({ role: m.role, content: m.content })),
+          stream: true,
+          temperature: 0.4,
+          // Gemini 2.0 Pro has a large context, but max_tokens for output is typically around 8192
+          max_tokens: 8192,
+        }),
+      },
+    );
+
+    return new Response(res.body);
+  }
+
+  // Use OpenRouter for all API calls
+  let options: ConstructorParameters<typeof Together>[0] = {
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: "https://openrouter.ai/api/v1",
+  };
+
   if (process.env.HELICONE_API_KEY) {
-    options.baseURL = "https://together.helicone.ai/v1";
+    options.baseURL = "https://openrouter.helicone.ai/v1";
     options.defaultHeaders = {
       "Helicone-Auth": `Bearer ${process.env.HELICONE_API_KEY}`,
       "Helicone-Property-appname": "LlamaCoder",
