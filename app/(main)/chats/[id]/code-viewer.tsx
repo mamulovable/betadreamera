@@ -181,10 +181,10 @@ export default function CodeViewer({
   // - When displaying a message: use that message's cumulative files directly
   const files = streamText
     ? (() => {
-        const lastMessage = assistantMessages.at(-1);
-        const baseFiles = lastMessage ? getFilesFromMessage(lastMessage) : [];
-        return mergeFiles(baseFiles, mergedStreamFiles);
-      })()
+      const lastMessage = assistantMessages.at(-1);
+      const baseFiles = lastMessage ? getFilesFromMessage(lastMessage) : [];
+      return mergeFiles(baseFiles, mergedStreamFiles);
+    })()
     : message
       ? getFilesFromMessage(message)
       : [];
@@ -194,8 +194,8 @@ export default function CodeViewer({
     latestStreamBlock && streamText
       ? files.find((f) => f.path === latestStreamBlock.path) || files.at(-1)
       : files.find((f) => f.path === "App.tsx") ||
-        files.find((f) => f.path.endsWith(".tsx")) ||
-        files[0];
+      files.find((f) => f.path.endsWith(".tsx")) ||
+      files[0];
   const code = mainFile ? mainFile.code : "";
   const language = mainFile ? mainFile.language : "";
   const rawFilename = mainFile ? mainFile.path : "";
@@ -285,7 +285,7 @@ export default function CodeViewer({
 
     // Generate app title for filename
     const appTitle = generateAppTitle(files);
-    const filename = `${appTitle.replace(/[^a-zA-Z0-9]/g, "-")}-llamacoder.zip`;
+    const filename = `${appTitle.replace(/[^a-zA-Z0-9]/g, "-")}-dreamera.zip`;
 
     // Create a download link and trigger the download
     const url = URL.createObjectURL(content);
@@ -363,8 +363,8 @@ export default function CodeViewer({
                   message,
                   currentVersion + 1,
                   (chat.assistantMessagesCountBefore || 0) +
-                    allAssistantMessages.length +
-                    1,
+                  allAssistantMessages.length +
+                  1,
                 )
               }
               className="inline-flex h-[38px] items-center justify-center rounded bg-blue-500 px-2 text-xs font-medium text-white hover:bg-blue-600"

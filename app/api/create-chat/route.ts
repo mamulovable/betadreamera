@@ -37,9 +37,9 @@ export async function POST(request: NextRequest) {
       options.baseURL = "https://openrouter.helicone.ai/v1";
       options.defaultHeaders = {
         "Helicone-Auth": `Bearer ${process.env.HELICONE_API_KEY}`,
-        "Helicone-Property-appname": "LlamaCoder",
+        "Helicone-Property-appname": "DreamEra",
         "Helicone-Session-Id": chat.id,
-        "Helicone-Session-Name": "LlamaCoder Chat",
+        "Helicone-Session-Name": "DreamEra Chat",
       };
     }
 

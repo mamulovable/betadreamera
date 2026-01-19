@@ -9,7 +9,7 @@ import Spinner from "@/components/spinner";
 import bgImg from "@/public/halo.png";
 import * as Select from "@radix-ui/react-select";
 import assert from "assert";
-import { CheckIcon, ChevronDownIcon } from "lucide-react";
+import { CheckIcon, ChevronDownIcon, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -87,36 +87,24 @@ export default function Home() {
   );
 
   return (
-    <div className="relative flex grow flex-col">
-      <div className="absolute inset-0 flex justify-center">
-        <Image
-          src={bgImg}
-          alt=""
-          className="max-h-[953px] w-full max-w-[1200px] object-cover object-top mix-blend-screen"
-          priority
-        />
+    <div className="relative flex grow flex-col grid-background">
+      {/* Decorative stars/sparkles could be added here */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] left-[15%] text-gray-300 opacity-50">✦</div>
+        <div className="absolute top-[20%] right-[20%] text-gray-300 opacity-50 text-xl">✦</div>
+        <div className="absolute bottom-[30%] left-[25%] text-gray-200 opacity-40">✦</div>
+        <div className="absolute top-[40%] left-[5%] text-gray-200 opacity-30 text-sm">✦</div>
+        <div className="absolute bottom-[10%] right-[10%] text-gray-300 opacity-50 text-lg">✦</div>
       </div>
 
       <div className="isolate flex h-full grow flex-col">
         <Header />
 
         <div className="mt-10 flex grow flex-col items-center px-4 lg:mt-16">
-          <a
-            className="mb-4 inline-flex shrink-0 items-center rounded-full border-[0.5px] border-[#BABABA] px-3.5 py-1.5 text-xs text-black transition-shadow"
-            href="https://togetherai.link/?utm_source=llamacoder&utm_medium=referral&utm_campaign=example-app"
-            target="_blank"
-          >
-            <span className="text-center">
-              Powered by <span className="font-semibold">Together AI</span>.
-              Used by
-              <span className="font-semibold"> 1.1M+ users. </span>
-            </span>
-          </a>
 
-          <h1 className="mt-4 text-balance text-center text-4xl leading-none text-gray-700 md:text-[64px] lg:mt-8">
-            Turn your <span className="text-blue-500">idea</span>
-            <br className="hidden md:block" /> into an{" "}
-            <span className="text-blue-500">app</span>
+          <h1 className="mt-8 text-balance text-center text-5xl font-bold leading-[1.1] tracking-tight text-gray-800 md:text-[84px] lg:mt-16">
+            Your AI App &<br />
+            <span className="text-gradient">Website Builder</span>
           </h1>
 
           <form
@@ -169,7 +157,7 @@ export default function Home() {
             }}
           >
             <Fieldset>
-              <div className="relative flex w-full max-w-2xl rounded-xl border border-gray-300 bg-white pb-10">
+              <div className="flex w-full max-w-3xl flex-col rounded-[32px] border border-gray-200 bg-white p-2 shadow-sm focus-within:ring-2 focus-within:ring-gray-100 transition-all">
                 <div className="w-full">
                   {screenshotLoading && (
                     <div className="relative mx-3 mt-3">
@@ -221,17 +209,17 @@ export default function Home() {
                   )}
                   <div className="relative">
                     <div className="p-3">
-                      <p className="invisible w-full whitespace-pre-wrap">
+                      <p className="invisible w-full whitespace-pre-wrap min-h-[120px]">
                         {textareaResizePrompt}
                       </p>
                     </div>
                     <textarea
                       ref={textareaRef}
-                      placeholder="Build me a budgeting app..."
+                      placeholder="What do you want to create today?"
                       required
                       name="prompt"
-                      rows={2}
-                      className="peer absolute inset-0 w-full resize-none bg-transparent px-4 py-3 placeholder-gray-500 focus-visible:outline-none disabled:opacity-50"
+                      rows={4}
+                      className="peer absolute inset-0 w-full resize-none bg-transparent px-6 py-6 text-lg placeholder-gray-400 focus-visible:outline-none disabled:opacity-50"
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
                       onPaste={(e) => {
@@ -278,7 +266,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <div className="absolute bottom-2 left-3 right-2.5 flex items-center justify-between">
+                <div className="flex items-center justify-between px-4 pb-4">
                   <div className="flex items-center gap-3">
                     <Select.Root
                       name="model"
@@ -388,14 +376,12 @@ export default function Home() {
                   </div>
 
                   <div className="relative flex shrink-0 has-[:disabled]:opacity-50">
-                    <div className="pointer-events-none absolute inset-0 -bottom-[1px] rounded bg-blue-500" />
-
                     <LoadingButton
-                      className="relative inline-flex size-6 items-center justify-center rounded bg-blue-500 font-medium text-white shadow-lg outline-blue-300 hover:bg-blue-500/75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-90"
+                      className="flex size-10 items-center justify-center rounded-full bg-black text-white transition hover:bg-gray-800 disabled:opacity-50"
                       type="submit"
                       disabled={screenshotLoading || prompt.length === 0}
                     >
-                      <ArrowRightIcon />
+                      <ArrowRightIcon className="size-5" />
                     </LoadingButton>
                   </div>
                 </div>
@@ -407,7 +393,7 @@ export default function Home() {
                   />
                 )}
               </div>
-              <div className="mt-4 flex w-full flex-wrap justify-between gap-2.5">
+              <div className="mt-8 flex w-full flex-wrap justify-center gap-3">
                 {SUGGESTED_PROMPTS.map((v) => (
                   <button
                     key={v.title}
@@ -426,8 +412,14 @@ export default function Home() {
                         }
                       }, 0);
                     }}
-                    className="rounded bg-[#E5E9EF] px-2.5 py-1.5 text-xs tracking-[0%] transition-colors hover:bg-[#cccfd5]"
+                    className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-sm text-gray-600 transition hover:bg-gray-50 shadow-sm"
                   >
+                    {v.title === "Quiz app" && <Sparkles className="size-3.5 text-gray-400" />}
+                    {v.title === "SaaS Landing page" && <LightningBoltIcon className="size-3.5 text-gray-400" />}
+                    {v.title === "Pomodoro Timer" && <ArrowRightIcon className="size-3.5 text-gray-400" />}
+                    {v.title === "Blog app" && <UploadIcon className="size-3.5 text-gray-400" />}
+                    {v.title === "Flashcard app" && <Sparkles className="size-3.5 text-gray-400" />}
+                    {v.title === "Timezone dashboard" && <LightningBoltIcon className="size-3.5 text-gray-400" />}
                     {v.title}
                   </button>
                 ))}
@@ -444,55 +436,20 @@ export default function Home() {
 
 const Footer = memo(() => {
   return (
-    <footer className="flex w-full flex-col items-center justify-between space-y-3 px-5 pb-3 pt-5 text-center sm:flex-row sm:pt-2">
-      <div>
-        <div className="font-medium">
-          Built with{" "}
-          <a
-            href="https://togetherai.link/?utm_source=llamacoder&utm_medium=referral&utm_campaign=example-app"
-            className="font-semibold text-blue-600 underline-offset-4 transition hover:text-gray-700 hover:underline"
-          >
-            Llama
-          </a>{" "}
-          and{" "}
-          <a
-            href="https://togetherai.link/?utm_source=llamacoder&utm_medium=referral&utm_campaign=example-app"
-            className="font-semibold text-blue-600 underline-offset-4 transition hover:text-gray-700 hover:underline"
-          >
-            Together AI
-          </a>
-          .
-        </div>
-      </div>
-      <div className="flex items-center gap-4 pb-4 sm:pb-0">
-        <Link href="https://x.com/nutlope" className="group" aria-label="">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 fill-slate-500 group-hover:fill-slate-700"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M10.7465 16L6.8829 10.2473L2.04622 16H0L5.97508 8.89534L0 0H5.25355L8.8949 5.42183L13.4573 0H15.5036L9.80578 6.77562L16 16H10.7465ZM13.0252 14.3782H11.6475L2.92988 1.62182H4.30767L7.79916 6.72957L8.40293 7.6159L13.0252 14.3782Z"
-              fill="#71717a"
-            />
-          </svg>
+    <footer className="flex w-full flex-col items-center justify-between gap-4 px-10 py-12 text-sm text-gray-400 sm:flex-row">
+      <p>© 2026 DreamEra. Powered by Together AI.</p>
+      <div className="flex items-center gap-6">
+        <Link
+          href="https://x.com/nutlope"
+          className="transition hover:text-black"
+        >
+          Twitter
         </Link>
         <Link
           href="https://github.com/Nutlope/llamacoder"
-          className="group"
-          aria-label=""
+          className="transition hover:text-black"
         >
-          <svg
-            aria-hidden="true"
-            className="h-6 w-6 fill-slate-500 group-hover:fill-slate-700"
-          >
-            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z" />
-          </svg>
+          GitHub
         </Link>
       </div>
     </footer>

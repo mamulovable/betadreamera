@@ -105,6 +105,18 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .grid-background {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+      linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
+  }
+
+  .text-gradient {
+    background: linear-gradient(to bottom, #7eb8b1, #3a7b78);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 ::-webkit-scrollbar {
